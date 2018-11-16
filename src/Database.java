@@ -7,11 +7,11 @@ public class Database {
     private String url;
     private Properties props = new Properties();
 
-    public Database(String url, String user, String password, String ssl) {
+    public Database(String url, String user, String password) {
         this.url = url;
-        props.setProperty("user","fred");
-        props.setProperty("password","secret");
-        props.setProperty("ssl","true");
+        props.setProperty("user", user);
+        props.setProperty("password", password);
+        props.setProperty("ssl", "true");
     }
 
     public Database(String url, Properties props) {
