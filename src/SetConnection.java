@@ -10,29 +10,31 @@ public class SetConnection extends JFrame {
     private JFormattedTextField passwordText;
     private JFormattedTextField userText;
     private JFormattedTextField urlsText;
+    private JRadioButton createTheTablesRadioButton;
+    private Frames frames;
 
     public SetConnection(Frames frames) {
         add(initialPanel);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Set Connection");
         setSize(400, 500);
         setVisible(true);
 
-        connectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                String user = userText.getText();
-                String url = urlsText.getText();
-                String password = passwordText.getText();
+        this.frames = frames;
 
-                Properties props = new Properties();
+        connectButton.addActionListener(event -> {
+            String user = userText.getText();
+            String url = urlsText.getText();
+            String password = passwordText.getText();
+            boolean createTables = createTheTablesRadioButton.isSelected();
 
-                props.setProperty("user", user);
-                props.setProperty("password", password);
-                props.setProperty("ssl", user);
+            Properties props = new Properties();
 
-                frames.connectDatabase(url, props);
-            }
+            props.setProperty("user", user);
+            props.setProperty("password", password);
+            props.setProperty("url", url);
+
+            this.frames.connectDatabase(url, props, createTables);
         });
     }
 }
