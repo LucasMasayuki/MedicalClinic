@@ -4,6 +4,8 @@ import java.util.Properties;
 
 public class Frames {
     private SetConnection connectionFrame;
+    private RegisterDoctors registerDoctorsFrame;
+    private Menu menuFrame;
     private Database database;
     private boolean haveConnected = false;
 
@@ -24,8 +26,6 @@ public class Frames {
             return;
         }
 
-        JOptionPane.showMessageDialog(null, sucessfulMessage);
-
         if (createTables) {
             try {
                 database.createDefaultTables();
@@ -35,7 +35,10 @@ public class Frames {
             }
         }
 
+        JOptionPane.showMessageDialog(null, sucessfulMessage);
+
         connectionFrame.dispose();
+        initMenuFrame();
     }
 
     public boolean haveConnected() {
@@ -46,7 +49,17 @@ public class Frames {
         connectionFrame = new SetConnection(this);
     }
 
-    public Database getDatabase() {
-        return this.database;
+    public void initRegisterDoctorsFrame() {
+        menuFrame.dispose();
+
+        registerDoctorsFrame = new RegisterDoctors(this);
+    }
+
+    public void initMenuFrame() {
+        menuFrame = new Menu(this);
+    }
+
+    public void doRegisterDoctor(String name, String telephone) {
+        database.registerDoctor(name, telephone);
     }
 }
