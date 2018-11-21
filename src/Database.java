@@ -107,6 +107,7 @@ public class Database {
                 createConsultationTable,
                 createDiagnosisTable,
                 createAgendaTable,
+                createExertsTable,
                 createTaxesTable
         );
 

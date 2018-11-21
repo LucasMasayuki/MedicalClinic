@@ -6,6 +6,9 @@ public class Menu extends JFrame {
     private JButton registerConsultButton;
     private JButton registerPaymentButton;
     private JPanel menuPanel;
+    private JButton createDiagnosisButton;
+    private JButton createAgendaButton;
+    private JButton generatePayrollButton;
     private Frames frames;
 
     public Menu(Frames frames) {
