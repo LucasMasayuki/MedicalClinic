@@ -1,3 +1,7 @@
+package Frames;
+
+import Frames.Frames;
+
 import javax.swing.*;
 
 public class Menu extends JFrame {
@@ -7,7 +11,6 @@ public class Menu extends JFrame {
     private JButton registerPaymentButton;
     private JPanel menuPanel;
     private JButton createDiagnosisButton;
-    private JButton createAgendaButton;
     private JButton generatePayrollButton;
     private Frames frames;
 

@@ -1,3 +1,5 @@
+package Frames;
+
 import javax.swing.*;
 
 public class ErrorFrame extends JFrame {
@@ -8,7 +10,7 @@ public class ErrorFrame extends JFrame {
     public ErrorFrame(Exception errors) {
         add(errorPanel);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setTitle("Set Connection");
+        setTitle("Set Database.Database");
         setSize(400, 500);
         setVisible(true);
         errorsText.setText(errors.getMessage());

@@ -1,6 +1,8 @@
+package Frames;
+
+import Frames.Frames;
+
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Properties;
 
 public class SetConnection extends JFrame {
@@ -16,7 +18,7 @@ public class SetConnection extends JFrame {
     public SetConnection(Frames frames) {
         add(initialPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Set Connection");
+        setTitle("Set Database.Database");
         setSize(400, 500);
         setVisible(true);
 

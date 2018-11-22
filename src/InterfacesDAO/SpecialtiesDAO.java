@@ -1,18 +1,19 @@
 package InterfacesDAO;
 
-import Entity.Doctors;
+import Entity.Specialties;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-public interface DoctorsDAO {
-    public ResultSet add(Doctors Doctor) throws SQLException;
+public interface SpecialtiesDAO {
+    public void add(Specialties Doctor) throws SQLException;
 
     public ResultSet get(int id) throws SQLException;
 
     public void remove(int id) throws SQLException;
 
-    public void update(Doctors doctor) throws SQLException;
+    public void update(Specialties doctor) throws SQLException;
 
     public ResultSet getAll() throws SQLException;
 }

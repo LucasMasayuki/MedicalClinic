@@ -1,19 +1,14 @@
 package Entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-@Entity
-public class Specialty {
-    @Id
-    @GeneratedValue
+public class Specialties {
     private int id;
 
     private int index;
     private String name;
 
-    public Specialty() {
+    public Specialties() {
     }
 
     public int getId() {
