@@ -1,8 +1,6 @@
 package Entity;
 
-import java.io.Serializable;
-
-public class Doctors implements Serializable {
+public class Doctors {
     private int id;
 
     private String name;

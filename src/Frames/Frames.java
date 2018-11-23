@@ -10,6 +10,7 @@ import java.util.Properties;
 public class Frames {
     private SetConnection connectionFrame;
     private RegisterDoctors registerDoctorsFrame;
+    private RegisterPatients registerPatientsFrame;
     private Menu menuFrame;
     private Database database;
 
@@ -49,14 +50,20 @@ public class Frames {
         connectionFrame = new SetConnection(this);
     }
 
+    public void initMenuFrame() {
+        menuFrame = new Menu(this);
+    }
+
     public void initRegisterDoctorsFrame() {
         menuFrame.dispose();
 
         registerDoctorsFrame = new RegisterDoctors(this);
     }
 
-    public void initMenuFrame() {
-        menuFrame = new Menu(this);
+    public void initRegisterPatientsFrame() {
+        menuFrame.dispose();
+
+        registerPatientsFrame = new RegisterPatients(this);
     }
 
     public void doRegisterDoctor(String name, String telephone, List<String> specialties) {
@@ -66,6 +73,7 @@ public class Frames {
             new ErrorFrame(e);
             return;
         }
+
         String successfulMessage = "Doctor created successfully!";
 
         registerDoctorsFrame.dispose();
@@ -82,7 +90,8 @@ public class Frames {
             new ErrorFrame(e);
             return;
         }
-        String successfulMessage = "Doctor created successfully!";
+
+        String successfulMessage = "Patient created successfully!";
 
         registerDoctorsFrame.dispose();
 

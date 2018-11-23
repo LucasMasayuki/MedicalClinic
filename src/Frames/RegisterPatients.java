@@ -1,7 +1,6 @@
 package Frames;
 
 import javax.swing.*;
-import java.sql.ResultSet;
 import java.util.Properties;
 
 public class RegisterPatients extends JFrame {
@@ -16,8 +15,6 @@ public class RegisterPatients extends JFrame {
     private Frames frames;
 
     public RegisterPatients(Frames frames) {
-        ResultSet resultSet;
-
         add(patientsPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Register Patients");

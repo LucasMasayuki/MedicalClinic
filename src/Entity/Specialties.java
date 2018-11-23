@@ -1,7 +1,5 @@
 package Entity;
 
-import javax.persistence.Entity;
-
 public class Specialties {
     private int id;
 

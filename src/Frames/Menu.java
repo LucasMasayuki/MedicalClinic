@@ -23,6 +23,10 @@ public class Menu extends JFrame {
 
         this.frames = frames;
 
+        registerPatientButton.addActionListener(event -> {
+            this.frames.initRegisterPatientsFrame();
+        });
+
         registerDoctorButton.addActionListener(event -> {
             this.frames.initRegisterDoctorsFrame();
         });

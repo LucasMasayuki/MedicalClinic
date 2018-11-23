@@ -3,6 +3,7 @@ package Database;
 import Dao.DoctorsDAOImpl;
 import Dao.ExertsDAOImpl;
 import Dao.PatientsDAOImpl;
+import Entity.Agenda;
 import Entity.Doctors;
 import Entity.Exerts;
 import Entity.Patients;
@@ -49,6 +50,8 @@ public class Database {
         DoctorsDAOImpl doctorsDAO = new DoctorsDAOImpl();
 
         ResultSet newDoctor = doctorsDAO.add(doctor);
+
+        Agenda agenda = new Agenda();
 
         Exerts exerts = new Exerts();
 
