@@ -208,7 +208,7 @@
           </grid>
         </constraints>
         <properties>
-          <selected value="true"/>
+          <selected value="false"/>
           <text value="Create the tables"/>
         </properties>
       </component>

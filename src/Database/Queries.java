@@ -12,7 +12,7 @@ public class Queries {
             " doctors_id INTEGER REFERENCES doctors(id)," +
             " specialties_id INTEGER REFERENCES specialties(id));";
 
-    private String createPatientsTable = "CREATE TYPE genre AS ENUM ('Female', 'Male');" +
+    private String createPatientsTable = "CREATE TYPE genre AS ENUM ('Female', 'Male');\n" +
             " CREATE TABLE patients (" +
             " id SERIAL PRIMARY KEY," +
             " name VARCHAR(40) not null," +
@@ -26,9 +26,9 @@ public class Queries {
             " CREATE TABLE agenda (" +
             " id SERIAL PRIMARY KEY," +
             " doctors_id INTEGER REFERENCES doctors(id)," +
-            " day_of_week days_of_week," +
-            " start TIME NOT NULL," +
-            " end TIME NOT NULL);";
+            " days_of_week days_of_week," +
+            " time_start TIME NOT NULL," +
+            " time_end TIME NOT NULL);";
 
     private String createDiagnosisTable = "CREATE TABLE diagnosis (" +
             " id SERIAL PRIMARY KEY," +
@@ -70,54 +70,53 @@ public class Queries {
     private String insertIntoDefaultSpecialties = String.join(
             "\n",
             "",
-            "INSERT INTO specialties (index, name) VALUES(1, 'cardiac') ",
-            "INSERT INTO specialties (index, name) VALUES(2, 'dental') ",
-            "INSERT INTO specialties (index, name) VALUES(3, 'orthopedic') ",
-            "INSERT INTO specialties (index, name) VALUES(4, 'dermatology') ",
-            "INSERT INTO specialties (index, name) VALUES(5, 'psychiatrist') ",
-            "INSERT INTO specialties (index, name) VALUES(6, 'urology') "
+            "INSERT INTO specialties (index, name) VALUES(1, 'cardiac'); ",
+            "INSERT INTO specialties (index, name) VALUES(2, 'dental'); ",
+            "INSERT INTO specialties (index, name) VALUES(3, 'orthopedic'); ",
+            "INSERT INTO specialties (index, name) VALUES(4, 'dermatology'); ",
+            "INSERT INTO specialties (index, name) VALUES(5, 'psychiatrist'); ",
+            "INSERT INTO specialties (index, name) VALUES(6, 'urology'); "
     );
 
     private String insertIntoDefaultTaxes = String.join(
             "\n",
             "",
-            "INSERT INTO taxes (specialties_id, month, year, value) VALUES(1, 'now', 20.21) ",
-            "INSERT INTO taxes (specialties_id, month, year, value) VALUES(2, 'now', 11.3) ",
-            "INSERT INTO taxes (specialties_id, month, year, value) VALUES(3, 'now', 10.6) ",
-            "INSERT INTO taxes (specialties_id, month, year, value) VALUES(4, 'now', 4.5) ",
-            "INSERT INTO taxes (specialties_id, month, year, value) VALUES(5, 'now', 3.22) ",
-            "INSERT INTO taxes (specialties_id, month, year, value) VALUES(6, 'now', 6.1) "
+            "INSERT INTO taxes (specialties_id, date, value) VALUES(1, 'now', 20.21); ",
+            "INSERT INTO taxes (specialties_id, date, value) VALUES(2, 'now', 11.3); ",
+            "INSERT INTO taxes (specialties_id, date, value) VALUES(3, 'now', 10.6); ",
+            "INSERT INTO taxes (specialties_id, date, value) VALUES(4, 'now', 4.5);",
+            "INSERT INTO taxes (specialties_id, date, value) VALUES(5, 'now', 3.22); ",
+            "INSERT INTO taxes (specialties_id, date, value) VALUES(6, 'now', 6.1); "
     );
 
     private String insertIntoDefaultDiseases = String.join(
             "\n",
             "",
-            "INSERT INTO specialties (specialties_id, name) VALUES(1, 'Stroke') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(1, 'Arrhythmia') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(2, 'Sensitive Teeth') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(2, 'Gum') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(3, 'Arthritis') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(3, 'Fractures') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(4, 'Acne') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(4, 'Chicken Pox') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(5, 'Depression') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(5, 'Eating disorders') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(6, 'Urinary Incontinence') ",
-            "INSERT INTO specialties (specialties_id, name) VALUES(6, 'prostate cancer') "
+            "INSERT INTO diseases (specialties_id, name) VALUES(1, 'Stroke'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(1, 'Arrhythmia'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(2, 'Sensitive Teeth'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(2, 'Gum'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(3, 'Arthritis'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(3, 'Fractures'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(4, 'Acne'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(4, 'Chicken Pox'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(5, 'Depression'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(5, 'Eating disorders'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(6, 'Urinary Incontinence'); ",
+            "INSERT INTO diseases (specialties_id, name) VALUES(6, 'prostate cancer'); "
     );
 
     public String initQuery() {
         String query = String.join(
                 "\n",
-                createSpecialtyTable,
                 createDiseasesTable,
+                createSpecialtyTable,
+                createTaxesTable,
                 createDoctorsTable,
                 createPatientsTable,
-                createConsultationTable,
-                createDiagnosisTable,
-                createAgendaTable,
                 createExertsTable,
-                createTaxesTable
+                createAgendaTable,
+                createConsultationTable
         );
 
         return query;

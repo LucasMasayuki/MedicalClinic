@@ -24,6 +24,7 @@ public class Database {
 
     public void setConnection(String url, Properties props) throws SQLException {
         connectionManager = ConnectionManager.getInstance(url, props);
+        connectionManager.getConnection();
     }
 
     public void createDefaultTables() throws SQLException {
