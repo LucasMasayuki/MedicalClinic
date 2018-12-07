@@ -111,8 +111,8 @@ public class Queries {
     public String initQuery() {
         String query = String.join(
                 "\n",
-                createDiseasesTable,
                 createSpecialtyTable,
+                createDiseasesTable,
                 createTaxesTable,
                 createDoctorsTable,
                 createPatientsTable,

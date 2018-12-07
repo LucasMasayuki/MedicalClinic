@@ -11,7 +11,7 @@ public class ErrorFrame extends JFrame {
         add(errorPanel);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Error!");
-        setSize(400, 500);
+        setSize(800, 500);
         setVisible(true);
         errorsText.setText(errors.getMessage());
 

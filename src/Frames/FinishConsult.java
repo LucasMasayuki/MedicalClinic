@@ -10,24 +10,22 @@ import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class FinishConsult extends JFrame {
     private JFormattedTextField endAtField;
     private JComboBox paymentMethodBox;
     private JFormattedTextField amountField;
-    private JLabel valuefield;
     private JButton finishButton;
     private JPanel finishConsultPanel;
     private JFormattedTextField remediesField;
     private JFormattedTextField observationField;
     private JFormattedTextField treatmentField;
-    private JList diseasesList;
     private JComboBox patientBox;
     private JComboBox doctorBox;
     private JComboBox paidBox;
     private JComboBox diseasesBox;
+    private JButton backButton;
     private Frames frames;
     private ComboItem defaultItem = new ComboItem("", "");
 
@@ -109,8 +107,8 @@ public class FinishConsult extends JFrame {
     public FinishConsult(Frames frames) {
         add(finishConsultPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Finish Consult");
-        setSize(800, 700);
+        setTitle("Finish Consult");;
+        setSize(800, 600);
         setVisible(true);
 
         this.frames = frames;
@@ -140,6 +138,11 @@ public class FinishConsult extends JFrame {
             props.setProperty("DiseaseId", disease.getValue());
 
             this.frames.doFinishConsult(props);
+        });
+
+        backButton.addActionListener(event -> {
+            this.dispose();
+            this.frames.initMenuFrame();
         });
     }
 }

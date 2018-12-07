@@ -19,6 +19,7 @@ public class RegisterPatients extends JFrame {
     private JFormattedTextField streetField;
     private JFormattedTextField complementField;
     private JComboBox statesBox;
+    private JButton backButton;
     private Frames frames;
 
     private ArrayList<String> setStates() {
@@ -70,7 +71,7 @@ public class RegisterPatients extends JFrame {
         add(patientsPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Register Patients");
-        setSize(500, 500);
+        setSize(800, 600);
         setVisible(true);
 
         this.frames = frames;
@@ -94,6 +95,11 @@ public class RegisterPatients extends JFrame {
             props.setProperty("Age", ageField.getText());
 
             this.frames.doRegisterPatient(props);
+        });
+
+        backButton.addActionListener(event -> {
+            this.dispose();
+            this.frames.initMenuFrame();
         });
     }
 }

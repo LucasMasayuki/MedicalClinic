@@ -18,21 +18,18 @@ public class RegisterConsult extends JFrame {
     private JComboBox patientBox;
     private JComboBox doctorBox;
     private JFormattedTextField hourField;
-    private JComboBox paidBox;
-    private JComboBox paymentMethodBox;
-    private JTextField valueField;
     private JPanel consultPanel;
     private JFormattedTextField dateField;
     private JComboBox specialtyBox;
+    private JButton backButton;
+    private ComboItem defaultItem = new ComboItem("", "");
 
     private Frames frames;
 
     private void setDoctorsBox() {
         DoctorsDAOImpl doctorsDAO = new DoctorsDAOImpl();
 
-        ComboItem defaultItem = new ComboItem("", "");
-
-        paymentMethodBox.addItem(defaultItem);
+        doctorBox.addItem(defaultItem);
 
         try {
             ResultSet doctors = doctorsDAO.getAll();
@@ -52,6 +49,8 @@ public class RegisterConsult extends JFrame {
     private void setPatientBox() {
         PatientsDAOImpl patientsDAO = new PatientsDAOImpl();
 
+        patientBox.addItem(defaultItem);
+
         try {
             ResultSet patients = patientsDAO.getAll();
 
@@ -70,9 +69,7 @@ public class RegisterConsult extends JFrame {
     private void setSpecialtyBox() {
         SpecialtiesDAOImpl specialtiesDAO = new SpecialtiesDAOImpl();
 
-        ComboItem defaultItem = new ComboItem("", "");
-
-        paymentMethodBox.addItem(defaultItem);
+        specialtyBox.addItem(defaultItem);
 
         try {
             ResultSet resultSet = specialtiesDAO.getAll();
@@ -93,8 +90,8 @@ public class RegisterConsult extends JFrame {
     public RegisterConsult(Frames frames) {
         add(consultPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Register Patients");
-        setSize(500, 500);
+        setTitle("Register Patients");;
+        setSize(800, 600);
         setVisible(true);
 
         this.frames = frames;
@@ -116,6 +113,11 @@ public class RegisterConsult extends JFrame {
             props.setProperty("Hour", hourField.getText());
 
             this.frames.doRegisterConsult(props);
+        });
+
+        backButton.addActionListener(event -> {
+            this.dispose();
+            this.frames.initMenuFrame();
         });
     }
 }

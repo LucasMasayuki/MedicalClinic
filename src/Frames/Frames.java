@@ -25,6 +25,7 @@ public class Frames {
             database = new Database();
         } catch (ClassNotFoundException e) {
             new ErrorFrame(e);
+            init();
             return;
         }
 
@@ -32,6 +33,7 @@ public class Frames {
             database.setConnection(url, props);
         } catch (SQLException e) {
             new ErrorFrame(e);
+            init();
             return;
         }
 
@@ -40,6 +42,7 @@ public class Frames {
                 database.createDefaultTables();
             } catch (SQLException e) {
                 new ErrorFrame(e);
+                init();
                 return;
             }
         }

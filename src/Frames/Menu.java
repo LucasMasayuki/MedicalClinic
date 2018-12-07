@@ -15,8 +15,8 @@ public class Menu extends JFrame {
     public Menu(Frames frames) {
         add(menuPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Menu");
-        setSize(400, 500);
+        setTitle("Menu");;
+        setSize(800, 600);
         setVisible(true);
 
         this.frames = frames;

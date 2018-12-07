@@ -29,6 +29,7 @@ public class RegisterDoctors extends JFrame {
     private JFormattedTextField start_fri;
     private JFormattedTextField end_sat;
     private JFormattedTextField start_sat;
+    private JButton backButton;
     private Frames frames;
 
     private ArrayList<String> weekDays = new ArrayList<>();
@@ -91,7 +92,7 @@ public class RegisterDoctors extends JFrame {
         add(RegisterDoctorPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Set Database.Database");
-        setSize(600, 500);
+        setSize(800, 600);
         setVisible(true);
 
         this.frames = frames;
@@ -125,6 +126,11 @@ public class RegisterDoctors extends JFrame {
             HashMap<String, HashMap<String, String>> daysOfWeek = _daysOfWeekMapped();
 
             this.frames.doRegisterDoctor(name, telephone, listSpecialties, daysOfWeek);
+        });
+
+        backButton.addActionListener(event -> {
+            this.dispose();
+            this.frames.initMenuFrame();
         });
     }
 }

@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface DiseasesDAO {
-    public void add(Diseases diseases) throws SQLException;
+    void add(Diseases diseases) throws SQLException;
 
-    public ResultSet get(int id) throws SQLException;
+    ResultSet get(int id) throws SQLException;
 
-    public void remove(int id) throws SQLException;
+    void remove(int id) throws SQLException;
 
-    public void update(Diseases diseases) throws SQLException;
+    void update(Diseases diseases) throws SQLException;
 
-    public ResultSet getAll() throws SQLException;
+    ResultSet getAll() throws SQLException;
 }

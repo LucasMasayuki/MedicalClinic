@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface ConsultationDAO {
-    public void add(Consultation consultation) throws SQLException;
+    void add(Consultation consultation) throws SQLException;
 
-    public ResultSet get(int id) throws SQLException;
+    ResultSet get(int id) throws SQLException;
 
-    public void remove(int id) throws SQLException;
+    void remove(int id) throws SQLException;
 
-    public void update(Consultation consultation) throws SQLException;
+    void update(Consultation consultation) throws SQLException;
 
-    public ResultSet getAll() throws SQLException;
+    ResultSet getAll() throws SQLException;
 }
