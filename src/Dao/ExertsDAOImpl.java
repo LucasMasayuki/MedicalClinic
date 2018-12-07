@@ -14,7 +14,7 @@ public class ExertsDAOImpl implements ExertsDAO {
     public void add(Exerts exerts) throws SQLException {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
 
-        String sql = " INSERT INTO Exerts VALUES (?, ?) ";
+        String sql = " INSERT INTO Exerts (doctors_id, specialties_id) VALUES (?, ?) ";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, exerts.getDoctors_id());
         statement.setInt(2, exerts.getSpecialties_id());
@@ -48,7 +48,7 @@ public class ExertsDAOImpl implements ExertsDAO {
     public void update(Exerts exerts) throws SQLException {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
 
-        String sql = "UPDATE Specialties SET doctors_id = ?, specialties_id = ? where id = ?";
+        String sql = "UPDATE Exerts SET doctors_id = ?, specialties_id = ? where id = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, exerts.getDoctors_id());
         statement.setInt(2, exerts.getSpecialties_id());

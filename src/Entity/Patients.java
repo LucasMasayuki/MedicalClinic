@@ -3,9 +3,12 @@ package Entity;
 public class Patients {
     private int id;
     private String name;
-    private int telephone;
+    private String telephone;
     private String document;
-    private String address;
+    private String complement;
+    private String street;
+    private String state;
+    private String city;
     private int age;
     private String genre;
 
@@ -28,11 +31,11 @@ public class Patients {
         this.name = name;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
@@ -44,12 +47,36 @@ public class Patients {
         this.document = document;
     }
 
-    public String getAddress() {
-        return address;
+    public String getComplement() {
+        return complement;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public int getAge() {

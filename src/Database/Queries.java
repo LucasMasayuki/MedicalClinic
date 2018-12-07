@@ -3,7 +3,6 @@ package Database;
 public class Queries {
     private String createDoctorsTable = "CREATE TABLE doctors (" +
             " id SERIAL PRIMARY KEY," +
-            " specialties_id INTEGER REFERENCES specialties(id)," +
             " name VARCHAR(40) NOT NULL," +
             " telephone NUMERIC(45) NOT NULL);";
 
@@ -16,17 +15,20 @@ public class Queries {
             " CREATE TABLE patients (" +
             " id SERIAL PRIMARY KEY," +
             " name VARCHAR(40) not null," +
-            " telephone NUMERIC(45) NOT NULL," +
-            " document VARCHAR(45) NOT NULL," +
-            " address VARCHAR(255) NOT NULL," +
-            " age INTEGER NOT NULL," +
-            " genre genre NOT NULL);";
+            " telephone VARCHAR(45) NOT NULL," +
+            " document VARCHAR(45) Default NULL," +
+            " complement VARCHAR(255) Default NULL," +
+            " street VARCHAR(255) Default NULL," +
+            " city VARCHAR(255)Default NULL," +
+            " state VARCHAR(255) Default NULL," +
+            " age INTEGER Default NULL," +
+            " genre genre Default NULL);";
 
     private String createAgendaTable = "CREATE TYPE days_of_week AS ENUM ('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');\n" +
             " CREATE TABLE agenda (" +
             " id SERIAL PRIMARY KEY," +
             " doctors_id INTEGER REFERENCES doctors(id)," +
-            " days_of_week days_of_week," +
+            " day_of_week days_of_week," +
             " time_start TIME NOT NULL," +
             " time_end TIME NOT NULL);";
 
@@ -62,7 +64,7 @@ public class Queries {
             " specialties_id INTEGER REFERENCES specialties(id)," +
             " date DATE NOT NULL," +
             " start_at TIME NOT NULL," +
-            " end_at TIME NOT NULL," +
+            " end_at TIME Default NULL," +
             " paid BOOLEAN NOT NULL DEFAULT false," +
             " amount_paid NUMERIC(20, 2) DEFAULT NULL," +
             " payment_method payment_method DEFAULT NULL);";
@@ -116,7 +118,8 @@ public class Queries {
                 createPatientsTable,
                 createExertsTable,
                 createAgendaTable,
-                createConsultationTable
+                createConsultationTable,
+                createDiagnosisTable
         );
 
         return query;

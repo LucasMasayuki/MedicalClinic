@@ -107,13 +107,15 @@
           <text value="Start at"/>
         </properties>
       </component>
-      <component id="549cf" class="javax.swing.JFormattedTextField" binding="formattedTextField1" default-binding="true">
+      <component id="549cf" class="javax.swing.JFormattedTextField" binding="start_sun">
         <constraints>
           <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
       <vspacer id="68b04">
         <constraints>
@@ -133,13 +135,15 @@
           <text value="Specialities"/>
         </properties>
       </component>
-      <component id="e1faf" class="javax.swing.JFormattedTextField" binding="formattedTextField2" default-binding="true">
+      <component id="e1faf" class="javax.swing.JFormattedTextField" binding="end_sun">
         <constraints>
           <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
       <component id="ce945" class="javax.swing.JLabel">
         <constraints>
@@ -162,101 +166,125 @@
           <text value="Day of week"/>
         </properties>
       </component>
-      <component id="d3b6a" class="javax.swing.JFormattedTextField" binding="formattedTextField3" default-binding="true">
+      <component id="d3b6a" class="javax.swing.JFormattedTextField" binding="start_mon">
         <constraints>
           <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="d7b9f" class="javax.swing.JFormattedTextField" binding="formattedTextField4" default-binding="true">
+      <component id="d7b9f" class="javax.swing.JFormattedTextField" binding="end_mon">
         <constraints>
           <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="4a249" class="javax.swing.JFormattedTextField" binding="formattedTextField5" default-binding="true">
+      <component id="4a249" class="javax.swing.JFormattedTextField" binding="start_tue">
         <constraints>
           <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="5dde4" class="javax.swing.JFormattedTextField" binding="formattedTextField6" default-binding="true">
+      <component id="5dde4" class="javax.swing.JFormattedTextField" binding="end_tue">
         <constraints>
           <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="e8520" class="javax.swing.JFormattedTextField" binding="formattedTextField7" default-binding="true">
+      <component id="e8520" class="javax.swing.JFormattedTextField" binding="end_wed">
         <constraints>
           <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="e6a96" class="javax.swing.JFormattedTextField" binding="formattedTextField8" default-binding="true">
+      <component id="e6a96" class="javax.swing.JFormattedTextField" binding="start_wed">
         <constraints>
           <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="6d42a" class="javax.swing.JFormattedTextField" binding="formattedTextField9" default-binding="true">
+      <component id="6d42a" class="javax.swing.JFormattedTextField" binding="start_thu">
         <constraints>
           <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="d94e7" class="javax.swing.JFormattedTextField" binding="formattedTextField10" default-binding="true">
+      <component id="d94e7" class="javax.swing.JFormattedTextField" binding="end_thu">
         <constraints>
           <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="9c6c7" class="javax.swing.JFormattedTextField" binding="formattedTextField11" default-binding="true">
+      <component id="9c6c7" class="javax.swing.JFormattedTextField" binding="end_fri">
         <constraints>
           <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="716a7" class="javax.swing.JFormattedTextField" binding="formattedTextField12" default-binding="true">
+      <component id="716a7" class="javax.swing.JFormattedTextField" binding="start_fri">
         <constraints>
           <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="9a2f8" class="javax.swing.JFormattedTextField" binding="formattedTextField14" default-binding="true">
+      <component id="9a2f8" class="javax.swing.JFormattedTextField" binding="end_sat">
         <constraints>
           <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
-      <component id="6960" class="javax.swing.JFormattedTextField" binding="formattedTextField15" default-binding="true">
+      <component id="6960" class="javax.swing.JFormattedTextField" binding="start_sat">
         <constraints>
           <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="00:00:00"/>
+        </properties>
       </component>
       <component id="c9292" class="javax.swing.JLabel">
         <constraints>

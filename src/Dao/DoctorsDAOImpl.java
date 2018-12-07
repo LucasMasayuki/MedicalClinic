@@ -16,11 +16,14 @@ public class DoctorsDAOImpl implements DoctorsDAO {
     public ResultSet add(Doctors doctor) throws SQLException {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
 
-        String sql = " INSERT INTO Doctors VALUES (?, ?) ";
-        PreparedStatement statement = conn.prepareStatement(sql);
+        String sql = " INSERT INTO Doctors (name, telephone) VALUES (?, ?) ";
+        PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
         statement.setString(1, doctor.getName());
         statement.setString(2, doctor.getTelephone());
-        return statement.executeQuery();
+        int i = statement.executeUpdate();
+
+        return statement.getGeneratedKeys();
     }
 
     @Override

@@ -5,6 +5,8 @@ import Dao.SpecialtiesDAOImpl;
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class RegisterDoctors extends JFrame {
@@ -13,49 +15,103 @@ public class RegisterDoctors extends JFrame {
     private JPanel RegisterDoctorPanel;
     private JFormattedTextField nameField;
     private JList<String> listOfSpecialties;
-    private JFormattedTextField formattedTextField1;
-    private JFormattedTextField formattedTextField2;
-    private JFormattedTextField formattedTextField3;
-    private JFormattedTextField formattedTextField4;
-    private JFormattedTextField formattedTextField5;
-    private JFormattedTextField formattedTextField6;
-    private JFormattedTextField formattedTextField7;
-    private JFormattedTextField formattedTextField8;
-    private JFormattedTextField formattedTextField9;
-    private JFormattedTextField formattedTextField10;
-    private JFormattedTextField formattedTextField11;
-    private JFormattedTextField formattedTextField12;
-    private JFormattedTextField formattedTextField14;
-    private JFormattedTextField formattedTextField15;
+    private JFormattedTextField start_sun;
+    private JFormattedTextField end_sun;
+    private JFormattedTextField start_mon;
+    private JFormattedTextField end_mon;
+    private JFormattedTextField start_tue;
+    private JFormattedTextField end_tue;
+    private JFormattedTextField end_wed;
+    private JFormattedTextField start_wed;
+    private JFormattedTextField start_thu;
+    private JFormattedTextField end_thu;
+    private JFormattedTextField end_fri;
+    private JFormattedTextField start_fri;
+    private JFormattedTextField end_sat;
+    private JFormattedTextField start_sat;
     private Frames frames;
+
+    private ArrayList<String> weekDays = new ArrayList<>();
+    private ArrayList<JFormattedTextField> daysOfWeekFields = new ArrayList<>();
+
+    private void _initializeArrays() {
+        weekDays.add("Sun");
+        weekDays.add("Mon");
+        weekDays.add("Tue");
+        weekDays.add("Wed");
+        weekDays.add("Thu");
+        weekDays.add("Fri");
+        weekDays.add("Sat");
+
+        daysOfWeekFields.add(start_sun);
+        daysOfWeekFields.add(end_sun);
+        daysOfWeekFields.add(start_mon);
+        daysOfWeekFields.add(end_mon);
+        daysOfWeekFields.add(start_tue);
+        daysOfWeekFields.add(end_tue);
+        daysOfWeekFields.add(start_wed);
+        daysOfWeekFields.add(end_wed);
+        daysOfWeekFields.add(start_thu);
+        daysOfWeekFields.add(end_thu);
+        daysOfWeekFields.add(start_fri);
+        daysOfWeekFields.add(end_fri);
+        daysOfWeekFields.add(start_sat);
+        daysOfWeekFields.add(end_sat);
+    }
+
+    private HashMap<String, HashMap<String, String>> _daysOfWeekMapped() {
+        HashMap<String, HashMap<String, String>> daysOfWeek = new HashMap<>();
+
+        HashMap<String, String> startAndEnd = new HashMap<>();
+
+        int index = 0;
+        int times = 1;
+
+        for (String day : weekDays) {
+            JTextField t1 = daysOfWeekFields.get(index);
+            startAndEnd.put("start", t1.getText());
+
+            index++;
+
+            JTextField t2 = daysOfWeekFields.get(index);
+            startAndEnd.put("end",t2.getText());
+
+            index++;
+
+            daysOfWeek.put(day, startAndEnd);
+        }
+
+        return daysOfWeek;
+    }
 
     public RegisterDoctors(Frames frames) {
         ResultSet resultSet;
-        DefaultListModel<String> specialties = new DefaultListModel<String>();
+        DefaultListModel specialties = new DefaultListModel<String>();
 
         add(RegisterDoctorPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Set Database.Database");
-        setSize(400, 500);
+        setSize(600, 500);
         setVisible(true);
 
         this.frames = frames;
+
+        _initializeArrays();
 
         SpecialtiesDAOImpl specialtiesDAO = new SpecialtiesDAOImpl();
 
         try {
             resultSet = specialtiesDAO.getAll();
 
-            int i = 0;
-
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 String index = resultSet.getString("id");
-                specialties.add(i, index + " - " + name);
-                i++;
+
+                specialties.addElement(index + " - " + name);
             }
 
-            listOfSpecialties = new JList<String>(specialties);
+            listOfSpecialties.setModel(specialties);
+            listOfSpecialties.updateUI();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,9 +122,9 @@ public class RegisterDoctors extends JFrame {
             String telephone = telephoneField.getText();
 
             List<String> listSpecialties = listOfSpecialties.getSelectedValuesList();
-            List<String> listDaysOfWeek = listOfSpecialties.getSelectedValuesList();
+            HashMap<String, HashMap<String, String>> daysOfWeek = _daysOfWeekMapped();
 
-            this.frames.doRegisterDoctor(name, telephone, listSpecialties);
+            this.frames.doRegisterDoctor(name, telephone, listSpecialties, daysOfWeek);
         });
     }
 }

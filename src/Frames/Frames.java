@@ -4,6 +4,8 @@ import Database.Database;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,6 +13,8 @@ public class Frames {
     private SetConnection connectionFrame;
     private RegisterDoctors registerDoctorsFrame;
     private RegisterPatients registerPatientsFrame;
+    private RegisterConsult registerConsultFrame;
+    private FinishConsult finishConsultFrame;
     private Menu menuFrame;
     private Database database;
 
@@ -66,9 +70,26 @@ public class Frames {
         registerPatientsFrame = new RegisterPatients(this);
     }
 
-    public void doRegisterDoctor(String name, String telephone, List<String> specialties) {
+    public void initReigsterConsultFrame() {
+        menuFrame.dispose();
+
+        registerConsultFrame = new RegisterConsult(this);
+    }
+
+    public void initFinishConsult() {
+        menuFrame.dispose();
+
+        finishConsultFrame = new FinishConsult(this);
+    }
+
+    public void doRegisterDoctor(
+            String name,
+            String telephone,
+            List<String> specialties,
+            HashMap<String, HashMap<String, String>> daysOfWeek
+    ) {
         try {
-            database.registerDoctor(name, telephone, specialties);
+            database.registerDoctor(name, telephone, specialties, daysOfWeek);
         } catch (SQLException e) {
             new ErrorFrame(e);
             return;
@@ -93,7 +114,44 @@ public class Frames {
 
         String successfulMessage = "Patient created successfully!";
 
-        registerDoctorsFrame.dispose();
+        registerPatientsFrame.dispose();
+
+        JOptionPane.showMessageDialog(null, successfulMessage);
+
+        menuFrame.setVisible(true);
+    }
+
+    public void doRegisterConsult(Properties prop) {
+        try {
+            database.registerConsult(prop);
+        } catch (SQLException e) {
+            new ErrorFrame(e);
+            return;
+        } catch (ParseException e) {
+            new ErrorFrame(e);
+            return;
+        }
+
+        String successfulMessage = "Consult created successfully!";
+
+        registerConsultFrame.dispose();
+
+        JOptionPane.showMessageDialog(null, successfulMessage);
+
+        menuFrame.setVisible(true);
+    }
+
+    public void doFinishConsult(Properties prop) {
+        try {
+            database.finishConsult(prop);
+        } catch (SQLException e) {
+            new ErrorFrame(e);
+            return;
+        }
+
+        String successfulMessage = "Consult finished successfully!";
+
+        finishConsultFrame.dispose();
 
         JOptionPane.showMessageDialog(null, successfulMessage);
 

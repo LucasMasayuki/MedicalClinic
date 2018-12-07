@@ -8,10 +8,8 @@ public class Menu extends JFrame {
     private JButton registerPatientButton;
     private JButton registerDoctorButton;
     private JButton registerConsultButton;
-    private JButton registerPaymentButton;
+    private JButton finishConsultButton;
     private JPanel menuPanel;
-    private JButton createDiagnosisButton;
-    private JButton generatePayrollButton;
     private Frames frames;
 
     public Menu(Frames frames) {
@@ -29,6 +27,14 @@ public class Menu extends JFrame {
 
         registerDoctorButton.addActionListener(event -> {
             this.frames.initRegisterDoctorsFrame();
+        });
+
+        registerConsultButton.addActionListener(event -> {
+            this.frames.initReigsterConsultFrame();
+        });
+
+        finishConsultButton.addActionListener(event -> {
+            this.frames.initFinishConsult();
         });
     }
 }

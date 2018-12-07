@@ -1,33 +1,33 @@
 package Dao;
 
 import Database.ConnectionManager;
-import Entity.Specialties;
-import InterfacesDAO.SpecialtiesDAO;
+import Entity.Diseases;
+import InterfacesDAO.DiseasesDAO;
 
 import java.sql.*;
 
-public class SpecialtiesDAOImpl implements SpecialtiesDAO {
-    public SpecialtiesDAOImpl(){
+public class DiseasesDAOImpl implements DiseasesDAO {
+    public DiseasesDAOImpl(){
     }
 
     @Override
-    public void add(Specialties specialty) throws SQLException {
+    public void add(Diseases diseases) throws SQLException {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
 
-        String sql = " INSERT INTO Specialties (index, name) VALUES (?, ?) ";
+        String sql = " INSERT INTO Diseases (specialties_id, name) VALUES (?, ?) ";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, specialty.getIndex());
-        statement.setString(2, specialty.getName());
+        statement.setInt(1, diseases.getSpecialtyId());
+        statement.setString(2, diseases.getName());
         statement.execute();
     }
 
     @Override
-    public ResultSet get(int id) throws SQLException {
+    public ResultSet get(int doctorId) throws SQLException {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
 
-        String sql = "SELECT * FROM Specialties where id = ?";
+        String sql = "SELECT * FROM Diseases where id = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, id);
+        statement.setInt(1, doctorId);
 
         return statement.executeQuery();
     }
@@ -36,7 +36,7 @@ public class SpecialtiesDAOImpl implements SpecialtiesDAO {
     public void remove(int id) throws SQLException {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
 
-        String sql = "DELETE * FROM Specialties where id = ?";
+        String sql = "DELETE * FROM Diseases where id = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, id);
 
@@ -44,14 +44,14 @@ public class SpecialtiesDAOImpl implements SpecialtiesDAO {
     }
 
     @Override
-    public void update(Specialties specialty) throws SQLException {
+    public void update(Diseases diseases) throws SQLException {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
 
-        String sql = "UPDATE Specialties SET index = ?, name = ? where id = ?";
+        String sql = "UPDATE Diseases SET specialties_id = ?, name = ? where id = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, specialty.getIndex());
-        statement.setString(2, specialty.getName());
-        statement.setInt(3, specialty.getId());
+        statement.setInt(1, diseases.getSpecialtyId());
+        statement.setString(2, diseases.getName());
+        statement.setInt(3, diseases.getId());
 
         statement.execute();
     }
@@ -61,7 +61,7 @@ public class SpecialtiesDAOImpl implements SpecialtiesDAO {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
         Statement statement = conn.createStatement();
 
-        String sql = "SELECT * FROM Specialties";
+        String sql = "SELECT * FROM Diseases";
 
         return statement.executeQuery(sql);
     }

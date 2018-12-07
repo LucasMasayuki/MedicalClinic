@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface ConsultationDAO {
-    public ResultSet add(Consultation consultation) throws SQLException;
+    public void add(Consultation consultation) throws SQLException;
 
     public ResultSet get(int id) throws SQLException;
 

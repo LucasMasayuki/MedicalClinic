@@ -6,7 +6,7 @@ public class Agenda {
     private int id;
 
     private int doctors_id;
-    private String days_of_week;
+    private String day_of_week;
     private Time time_start;
     private Time time_end;
 
@@ -29,12 +29,12 @@ public class Agenda {
         this.doctors_id = doctors_id;
     }
 
-    public String getDays_of_week() {
-        return days_of_week;
+    public String getDay_of_week() {
+        return day_of_week;
     }
 
-    public void setDays_of_week(String days_of_week) {
-        this.days_of_week = days_of_week;
+    public void setDay_of_week(String days_of_week) {
+        this.day_of_week = days_of_week;
     }
 
     public Time getTime_start() {

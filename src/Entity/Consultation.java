@@ -1,6 +1,8 @@
 package Entity;
 
 import java.sql.Time;
+import java.sql.Date;
+import java.util.ArrayList;
 
 public class Consultation {
     private int id;
@@ -8,12 +10,13 @@ public class Consultation {
     private int doctors_id;
     private int patients_id;
     private int specialties_id;
-    private Time date;
+    private Date date;
     private Time start_at;
     private Time end_at;
     private boolean paid;
     private float amount_paid;
     private String payment_method;
+    private ArrayList<String> paymentMethod = new ArrayList<>();
 
     public Consultation() {
     }
@@ -50,11 +53,11 @@ public class Consultation {
         this.specialties_id = specialties_id;
     }
 
-    public Time getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Time date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -97,4 +100,16 @@ public class Consultation {
     public void setPayment_method(String payment_method) {
         this.payment_method = payment_method;
     }
+
+    public ArrayList<String> getDefaultPaymentMethod() {
+        putDefaultPaymentMethod();
+        return paymentMethod;
+    }
+
+    private void putDefaultPaymentMethod() {
+        paymentMethod.add("Credit card");
+        paymentMethod.add("Debit card");
+        paymentMethod.add("Money");
+    }
+
 }

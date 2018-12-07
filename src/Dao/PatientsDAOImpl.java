@@ -15,19 +15,22 @@ public class PatientsDAOImpl implements PatientsDAO {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
 
         String sql = "" +
-                "INSERT INTO Patients (name, telephone, document, address, age, genre) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?) ";
+                "INSERT INTO Patients (name, telephone, document, age, genre, street, complement, city, state) " +
+                "VALUES (?, ?, ?,  ?, CAST(? AS genre), ?, ?, ?, ?) ";
 
         PreparedStatement statement = conn.prepareStatement(sql);
 
         statement.setString(1, patients.getName());
-        statement.setInt(2, patients.getTelephone());
+        statement.setString(2, patients.getTelephone());
         statement.setString(3, patients.getDocument());
-        statement.setString(4, patients.getAddress());
-        statement.setInt(5, patients.getAge());
-        statement.setString(6, patients.getGenre());
+        statement.setInt(4, patients.getAge());
+        statement.setString(5, patients.getGenre());
+        statement.setString(6, patients.getStreet());
+        statement.setString(7, patients.getComplement());
+        statement.setString(8, patients.getCity());
+        statement.setString(9, patients.getState());
 
-        statement.executeQuery();
+        statement.executeUpdate();
     }
 
     @Override
@@ -61,20 +64,26 @@ public class PatientsDAOImpl implements PatientsDAO {
                 "SET name = ?," +
                 "telephone = ?," +
                 "document = ?," +
-                "address = ?," +
                 "age = ?," +
-                "genre = ?" +
+                "genre = CAST(? AS genre))" +
+                "street = ?," +
+                "complement = ?," +
+                "city = ?," +
+                "state = ?," +
                 "where id = ?";
 
         PreparedStatement statement = conn.prepareStatement(sql);
 
         statement.setString(1, patients.getName());
-        statement.setInt(2, patients.getTelephone());
+        statement.setString(2, patients.getTelephone());
         statement.setString(3, patients.getDocument());
-        statement.setString(4, patients.getAddress());
-        statement.setInt(5, patients.getAge());
-        statement.setString(6, patients.getGenre());
-        statement.setInt(7, patients.getId());
+        statement.setInt(4, patients.getAge());
+        statement.setString(5, patients.getGenre());
+        statement.setString(6, patients.getStreet());
+        statement.setString(7, patients.getComplement());
+        statement.setString(8, patients.getCity());
+        statement.setString(9, patients.getState());
+        statement.setInt(10, patients.getId());
 
         statement.execute();
     }

@@ -28,6 +28,7 @@ public class SetConnection extends JFrame {
             String user = userText.getText();
             String url = urlsText.getText();
             String password = passwordText.getText();
+
             boolean createTables = createTheTablesRadioButton.isSelected();
 
             Properties props = new Properties();
