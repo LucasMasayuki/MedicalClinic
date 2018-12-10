@@ -3,24 +3,32 @@ package Frames;
 import Utility.ComboItem;
 
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
 public class RegisterPatients extends JFrame {
-    private JButton registerButton;
     private JFormattedTextField nameField;
     private JFormattedTextField telephoneField;
     private JFormattedTextField documentField;
     private JFormattedTextField cityField;
-    private JComboBox genreBox;
-    private JPanel patientsPanel;
     private JFormattedTextField ageField;
-    private JFormattedTextField stateField;
     private JFormattedTextField streetField;
     private JFormattedTextField complementField;
+
+    private JComboBox genreBox;
     private JComboBox statesBox;
+
+    private JPanel patientsPanel;
+
     private JButton backButton;
+    private JButton registerButton;
+
     private Frames frames;
+
+    private String errorMessage = "Error! ";
 
     private ArrayList<String> setStates() {
         ArrayList<String> states = new ArrayList<>();
@@ -66,6 +74,42 @@ public class RegisterPatients extends JFrame {
         }
     }
 
+    private void numbersFields() {
+        NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setMinimum(0);
+        formatter.setMaximum(130);
+        formatter.setAllowsInvalid(false);
+
+        ageField = new JFormattedTextField(formatter);
+
+        DecimalFormat phoneFormat = new DecimalFormat("00000000000");
+
+        telephoneField = new JFormattedTextField(phoneFormat);
+        documentField = new JFormattedTextField(phoneFormat);
+    }
+
+    private void instantiateFormattedFields() {
+        numbersFields();
+    }
+
+    private boolean isValidFields() {
+        boolean isValid = true;
+        String telephone = telephoneField.getText();
+        String name = nameField.getText();
+
+        if (telephone.isEmpty()) {
+            errorMessage += " Put the telephone \n";
+            isValid = false;
+        }
+
+        if (name.isEmpty()) {
+            errorMessage += " Put the name \n";
+            isValid = false;
+        }
+        return isValid;
+    }
 
     public RegisterPatients(Frames frames) {
         add(patientsPanel);
@@ -77,8 +121,14 @@ public class RegisterPatients extends JFrame {
         this.frames = frames;
 
         setStatesBox();
+        instantiateFormattedFields();
 
         registerButton.addActionListener(event -> {
+            if (!isValidFields()) {
+                this.frames.showErrorFrame(errorMessage);
+                return;
+            }
+
             Properties props = new Properties();
 
             ComboItem state = (ComboItem) statesBox.getSelectedItem();

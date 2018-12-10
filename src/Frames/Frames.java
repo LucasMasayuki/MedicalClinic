@@ -25,7 +25,7 @@ public class Frames {
             database = new Database();
         } catch (ClassNotFoundException e) {
             new ErrorFrame(e);
-            init();
+            init(true);
             return;
         }
 
@@ -33,7 +33,7 @@ public class Frames {
             database.setConnection(url, props);
         } catch (SQLException e) {
             new ErrorFrame(e);
-            init();
+            init(true);
             return;
         }
 
@@ -42,19 +42,41 @@ public class Frames {
                 database.createDefaultTables();
             } catch (SQLException e) {
                 new ErrorFrame(e);
-                init();
+                init(true);
                 return;
             }
         }
 
         JOptionPane.showMessageDialog(null, successfulMessage);
 
-        connectionFrame.dispose();
+        if (connectionFrame != null) {
+            connectionFrame.dispose();
+        }
+
         initMenuFrame();
     }
 
-    public void init() {
-        connectionFrame = new SetConnection(this);
+    public void showErrorFrame(String errorMessage) {
+        new ErrorFrame(errorMessage);
+    }
+
+    public void init(boolean show) {
+        if (show) {
+            connectionFrame = new SetConnection(this);
+            return;
+        }
+
+        Properties props = new Properties();
+
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String password = "123456789lkk";
+        String user = "postgres";
+
+        props.setProperty("user", user);
+        props.setProperty("password", password);
+        props.setProperty("url", url);
+
+        connectDatabase(url, props, false);
     }
 
     public void initMenuFrame() {
@@ -142,6 +164,15 @@ public class Frames {
         JOptionPane.showMessageDialog(null, successfulMessage);
 
         menuFrame.setVisible(true);
+    }
+
+    public void verifyPatientRegister() {
+        try {
+            database.finishConsult(prop);
+        } catch (SQLException e) {
+            new ErrorFrame(e);
+            return;
+        }
     }
 
     public void doFinishConsult(Properties prop) {

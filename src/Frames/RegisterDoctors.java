@@ -92,7 +92,7 @@ public class RegisterDoctors extends JFrame {
         add(RegisterDoctorPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Set Database.Database");
-        setSize(800, 600);
+        setSize(600, 600);
         setVisible(true);
 
         this.frames = frames;
