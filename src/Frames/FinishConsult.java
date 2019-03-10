@@ -28,6 +28,7 @@ public class FinishConsult extends JFrame {
     private JButton backButton;
     private Frames frames;
     private ComboItem defaultItem = new ComboItem("", "");
+    private String errorMessage = "Errors! ";
 
     private void setDoctorsBox() {
         DoctorsDAOImpl doctorsDAO = new DoctorsDAOImpl();
@@ -67,6 +68,71 @@ public class FinishConsult extends JFrame {
         } catch (SQLException e) {
             new ErrorFrame(e);
         }
+    }
+
+    private boolean isValidFields() {
+        boolean isValid = true;
+
+        String amount = amountField.getText();
+        String endAt = endAtField.getText();
+        String treatment = treatmentField.getText();
+        String remedies = remediesField.getText();
+        String obser = observationField.getText();
+
+        ComboItem patient = (ComboItem) patientBox.getSelectedItem();
+        ComboItem doctor = (ComboItem) doctorBox.getSelectedItem();
+        String paid = (String) paidBox.getSelectedItem();
+        String paymentBox = (String) paymentMethodBox.getSelectedItem();
+        String disease = (String) diseasesBox.getSelectedItem();
+
+        if (endAt.isEmpty()) {
+            errorMessage += " Put the end \n";
+            isValid = false;
+        }
+
+        if (patient.getValue().isEmpty()) {
+            errorMessage += " Put the patient \n";
+            isValid = false;
+        }
+
+        if (doctor.getValue().isEmpty()) {
+            errorMessage += " Put the doctor \n";
+            isValid = false;
+        }
+
+        if (disease.isEmpty()) {
+            errorMessage += " Put the disease \n";
+            isValid = false;
+        }
+
+        if (treatment.isEmpty()) {
+            errorMessage += " Put the treatment \n";
+            isValid = false;
+        }
+
+        if (obser.isEmpty()) {
+            errorMessage += " Put the obs \n";
+            isValid = false;
+        }
+
+        if (remedies.isEmpty()) {
+            errorMessage += " Put the remedies \n";
+            isValid = false;
+        }
+
+        if (paid == "Yes") {
+            if (paymentBox.isEmpty()) {
+                errorMessage += " Put the payment method \n";
+                isValid = false;
+            }
+
+            if (amount.isEmpty()) {
+                errorMessage += " Put the amount \n";
+                isValid = false;
+            }
+        }
+
+        return isValid;
     }
 
     private void setPaymentMethodBox() {
@@ -137,7 +203,8 @@ public class FinishConsult extends JFrame {
             props.setProperty("Observation", observationField.getText());
             props.setProperty("DiseaseId", disease.getValue());
 
-            this.frames.doFinishConsult(props);
+            // Verify if patient have registry finished
+            this.frames.verifyPatientRegister(props);
         });
 
         backButton.addActionListener(event -> {

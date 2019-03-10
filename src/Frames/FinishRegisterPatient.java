@@ -1,31 +1,30 @@
 package Frames;
 
+import Dao.PatientsDAOImpl;
 import Utility.ComboItem;
 
 import javax.swing.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class RegisterPatients extends JFrame {
+public class FinishRegisterPatient extends JFrame {
+    private JPanel finishRegisterPatientPanel;
     private JFormattedTextField nameField;
-    private JFormattedTextField telephoneField;
-    private JFormattedTextField documentField;
     private JFormattedTextField cityField;
+    private JComboBox genreBox;
     private JFormattedTextField ageField;
     private JFormattedTextField streetField;
     private JFormattedTextField complementField;
-
-    private JComboBox genreBox;
-    private JComboBox statesBox;
-
-    private JPanel patientsPanel;
-
+    private JFormattedTextField documentField;
     private JButton backButton;
-    private JButton registerButton;
-
+    private JButton finishButton;
+    private JComboBox statesBox;
     private Frames frames;
 
-    private String errorMessage = "Error! ";
+    private String errorMessage = "Errors! ";
+    private int patientId;
 
     private ArrayList<String> setStates() {
         ArrayList<String> states = new ArrayList<>();
@@ -73,51 +72,77 @@ public class RegisterPatients extends JFrame {
 
     private boolean isValidFields() {
         boolean isValid = true;
-        String telephone = telephoneField.getText();
-        String name = nameField.getText();
+
+        String street = streetField.getText();
+        String document = documentField.getText();
         String age = ageField.getText();
+        String city = cityField.getText();
 
-        if (telephone.isEmpty()) {
-            errorMessage += " Put the telephone \n";
+        ComboItem state = (ComboItem) statesBox.getSelectedItem();
+        String genre = (String) genreBox.getSelectedItem();
+
+        if (street.isEmpty()) {
+            errorMessage += " Put the street \n";
             isValid = false;
         }
 
-        try {
-            Long.parseLong(telephone);
-        } catch (NumberFormatException e) {
-            errorMessage += " Put a valid telephone  \n";
+        if (document.isEmpty()) {
+            errorMessage += " Put the document \n";
             isValid = false;
         }
 
-        if (!age.isEmpty()) {
-            try {
-                Integer.parseInt(age);
-            } catch (NumberFormatException e) {
-                errorMessage += " Put a valid age  \n";
-                isValid = false;
-            }
+        if (city.isEmpty()) {
+            errorMessage += " Put the city \n";
+            isValid = false;
         }
 
-        if (name.isEmpty()) {
-            errorMessage += " Put the name \n";
+        if (age.isEmpty()) {
+            errorMessage += " Put the age \n";
+            isValid = false;
+        }
+
+        if (state.getValue().isEmpty()) {
+            errorMessage += " Put the state \n";
+            isValid = false;
+        }
+
+        if (genre.isEmpty()) {
+            errorMessage += " Put the genre \n";
             isValid = false;
         }
 
         return isValid;
     }
 
-    public RegisterPatients(Frames frames) {
-        add(patientsPanel);
+    private void setPatientName() throws SQLException {
+        PatientsDAOImpl patientsDAO = new PatientsDAOImpl();
+
+        ResultSet patient = patientsDAO.get(patientId);
+
+        if (patient.next()) {
+            nameField.setText(patient.getString("name"));
+        }
+    }
+
+    public FinishRegisterPatient(Frames frames, int patientId) {
+        add(finishRegisterPatientPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Register Patients");
         setSize(800, 600);
         setVisible(true);
 
         this.frames = frames;
+        this.patientId = patientId;
 
         setStatesBox();
 
-        registerButton.addActionListener(event -> {
+        try {
+            setPatientName();
+        } catch (SQLException e) {
+            this.frames.showErrorFrame(e.getMessage());
+        }
+
+        finishButton.addActionListener(event -> {
             if (!isValidFields()) {
                 this.frames.showErrorFrame(errorMessage);
                 return;
@@ -128,8 +153,6 @@ public class RegisterPatients extends JFrame {
             ComboItem state = (ComboItem) statesBox.getSelectedItem();
             String genre = (String) genreBox.getSelectedItem();
 
-            props.setProperty("Name", nameField.getText());
-            props.setProperty("Telephone", telephoneField.getText());
             props.setProperty("Document", documentField.getText());
             props.setProperty("City", cityField.getText());
             props.setProperty("Street", streetField.getText());
@@ -137,8 +160,9 @@ public class RegisterPatients extends JFrame {
             props.setProperty("Complement", complementField.getText());
             props.setProperty("Genre", genre);
             props.setProperty("Age", ageField.getText());
+            props.setProperty("PatientId", Integer.toString(patientId));
 
-            this.frames.doRegisterPatient(props);
+            this.frames.doFinishRegisterPatient(props);
         });
 
         backButton.addActionListener(event -> {

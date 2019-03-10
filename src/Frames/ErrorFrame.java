@@ -19,6 +19,7 @@ public class ErrorFrame extends JFrame {
             dispose();
         });
     }
+
     public ErrorFrame(String errorMessage) {
         add(errorPanel);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

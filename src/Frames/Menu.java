@@ -30,7 +30,7 @@ public class Menu extends JFrame {
         });
 
         registerConsultButton.addActionListener(event -> {
-            this.frames.initReigsterConsultFrame();
+            this.frames.initRegisterConsultFrame();
         });
 
         finishConsultButton.addActionListener(event -> {

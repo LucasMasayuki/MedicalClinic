@@ -4,7 +4,7 @@ public class Queries {
     private String createDoctorsTable = "CREATE TABLE doctors (" +
             " id SERIAL PRIMARY KEY," +
             " name VARCHAR(40) NOT NULL," +
-            " telephone NUMERIC(45) NOT NULL);";
+            " telephone VARCHAR(45) NOT NULL);";
 
     private String createExertsTable = "CREATE TABLE exerts (" +
             " id SERIAL PRIMARY KEY," +
