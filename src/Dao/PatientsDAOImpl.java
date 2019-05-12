@@ -13,10 +13,19 @@ public class PatientsDAOImpl implements PatientsDAO {
     @Override
     public void add(Patients patients) throws SQLException {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
+        boolean isCast = patients.getGenre().equals(null);
 
-        String sql = "" +
-                "INSERT INTO Patients (name, telephone, document, age, genre, street, complement, city, state) " +
-                "VALUES (?, ?, ?,  ?, CAST(? AS genre), ?, ?, ?, ?) ";
+        String sql;
+
+        if (isCast) {
+            sql = "" +
+                    "INSERT INTO Patients (name, telephone, document, age, street, complement, city, state, genre) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS genre)) ";
+        } else {
+            sql = "" +
+                    "INSERT INTO Patients (name, telephone, document, age, street, complement, city, state) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+        }
 
         PreparedStatement statement = conn.prepareStatement(sql);
 
@@ -24,11 +33,14 @@ public class PatientsDAOImpl implements PatientsDAO {
         statement.setString(2, patients.getTelephone());
         statement.setString(3, patients.getDocument());
         statement.setInt(4, patients.getAge());
-        statement.setString(5, patients.getGenre());
-        statement.setString(6, patients.getStreet());
-        statement.setString(7, patients.getComplement());
-        statement.setString(8, patients.getCity());
-        statement.setString(9, patients.getState());
+        statement.setString(5, patients.getStreet());
+        statement.setString(6, patients.getComplement());
+        statement.setString(7, patients.getCity());
+        statement.setString(8, patients.getState());
+
+        if (isCast) {
+            statement.setString(9, patients.getGenre());
+        }
 
         statement.executeUpdate();
     }
@@ -60,16 +72,16 @@ public class PatientsDAOImpl implements PatientsDAO {
         Connection conn = ConnectionManager.getAnInstance().getConnection();
 
         String sql = "" +
-                "UPDATE Patients" +
-                "SET name = ?," +
-                "telephone = ?," +
-                "document = ?," +
-                "age = ?," +
-                "genre = CAST(? AS genre))" +
-                "street = ?," +
-                "complement = ?," +
-                "city = ?," +
-                "state = ?," +
+                "UPDATE Patients " +
+                "SET name = ?, " +
+                "telephone = ?, " +
+                "document = ?, " +
+                "age = ?, " +
+                "genre = CAST(? AS genre), " +
+                "street = ?, " +
+                "complement = ?, " +
+                "city = ?, " +
+                "state = ? " +
                 "where id = ?";
 
         PreparedStatement statement = conn.prepareStatement(sql);
@@ -84,6 +96,34 @@ public class PatientsDAOImpl implements PatientsDAO {
         statement.setString(8, patients.getCity());
         statement.setString(9, patients.getState());
         statement.setInt(10, patients.getId());
+
+        statement.execute();
+    }
+
+    public void finishRegister(Patients patients) throws SQLException {
+        Connection conn = ConnectionManager.getAnInstance().getConnection();
+
+        String sql = "" +
+                "UPDATE Patients " +
+                "SET document = ?, " +
+                "age = ?, " +
+                "genre = CAST(? AS genre), " +
+                "street = ?, " +
+                "complement = ?, " +
+                "city = ?, " +
+                "state = ? " +
+                "where id = ? ";
+
+        PreparedStatement statement = conn.prepareStatement(sql);
+
+        statement.setString(1, patients.getDocument());
+        statement.setInt(2, patients.getAge());
+        statement.setString(3, patients.getGenre());
+        statement.setString(4, patients.getStreet());
+        statement.setString(5, patients.getComplement());
+        statement.setString(6, patients.getCity());
+        statement.setString(7, patients.getState());
+        statement.setInt(8, patients.getId());
 
         statement.execute();
     }

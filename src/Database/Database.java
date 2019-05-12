@@ -3,6 +3,7 @@ package Database;
 import Dao.*;
 import Entity.*;
 import Frames.ErrorFrame;
+import com.sun.org.glassfish.external.statistics.annotations.Reset;
 
 import java.sql.*;
 import java.text.DateFormat;
@@ -22,6 +23,34 @@ public class Database {
     public Database() throws ClassNotFoundException {
         // Load Postgree driver
         Class.forName("org.postgresql.Driver");
+    }
+
+    private boolean isFinishedRegister(ResultSet patient) throws SQLException {
+        boolean finished = true;
+
+        while (patient.next()) {
+            if (patient.getString("street").isEmpty()) {
+                finished = false;
+            }
+
+            if (patient.getString("state").isEmpty()) {
+                finished = false;
+            }
+
+            if (patient.getString("city").isEmpty()) {
+                finished = false;
+            }
+
+            if (patient.getInt("age") == 0) {
+                finished = false;
+            }
+
+            if (patient.getString("document").isEmpty()) {
+                finished = false;
+            }
+        }
+
+        return finished;
     }
 
     public void setConnection(String url, Properties props) throws SQLException {
@@ -96,12 +125,18 @@ public class Database {
         patient.setName(props.getProperty("Name"));
         patient.setTelephone(props.getProperty("Telephone"));
         patient.setDocument(props.getProperty("Document"));
-        patient.setAge(Integer.parseInt(props.getProperty("Age")));
         patient.setCity(props.getProperty("City"));
         patient.setComplement(props.getProperty("Complement"));
         patient.setState(props.getProperty("State"));
         patient.setStreet(props.getProperty("Street"));
         patient.setGenre(props.getProperty("Genre"));
+
+        // Ignore exception
+        try {
+            patient.setAge(Integer.parseInt(props.getProperty("Age")));
+        } catch (NumberFormatException e) {
+
+        }
 
         PatientsDAOImpl patientsDAO = new PatientsDAOImpl();
 
@@ -111,32 +146,54 @@ public class Database {
     public void registerConsult(Properties props) throws SQLException, ParseException {
         Consultation consultation = new Consultation();
 
-        String stringValue = props.getProperty("Value");
         String stringDate = props.getProperty("Date");
 
         // Format date
         DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date(fmt.parse(stringDate).getTime());
 
-        float value = stringValue.isEmpty() ? 0 : Float.parseFloat(stringValue);
         Time startAt = Time.valueOf(props.getProperty("Hour"));
         int doctorId = Integer.parseInt(props.getProperty("DoctorId"));
         int patientId = Integer.parseInt(props.getProperty("PatientId"));
         int specialtyId = Integer.parseInt(props.getProperty("SpecialtyId"));
-        Boolean isPaid = props.getProperty("Paid").equals("Yes");
 
-        consultation.setAmount_paid(value);
         consultation.setDate(date);
         consultation.setStart_at(startAt);
         consultation.setDoctors_id(doctorId);
-        consultation.setPaid(isPaid);
         consultation.setPatients_id(patientId);
-        consultation.setPayment_method(props.getProperty("PaymentMethod"));
         consultation.setSpecialties_id(specialtyId);
 
         ConsultationDAOImpl consultationDAO = new ConsultationDAOImpl();
 
         consultationDAO.add(consultation);
+    }
+
+    public boolean verifyRegisterOfPatient(Properties prop) throws SQLException {
+        int patientId = Integer.parseInt(prop.getProperty("PatientId"));
+
+       PatientsDAOImpl patientsDAO = new PatientsDAOImpl();
+
+       ResultSet patient = patientsDAO.get(patientId);
+
+       return isFinishedRegister(patient);
+    }
+
+    public void finishRegisterPatient(Properties props) throws SQLException {
+        Patients patient = new Patients();
+        int patientId = Integer.parseInt(props.getProperty("PatientId"));
+
+        patient.setId(patientId);
+        patient.setDocument(props.getProperty("Document"));
+        patient.setAge(Integer.parseInt(props.getProperty("Age")));
+        patient.setCity(props.getProperty("City"));
+        patient.setComplement(props.getProperty("Complement"));
+        patient.setState(props.getProperty("State"));
+        patient.setStreet(props.getProperty("Street"));
+        patient.setGenre(props.getProperty("Genre"));
+
+        PatientsDAOImpl patientsDAO = new PatientsDAOImpl();
+
+        patientsDAO.finishRegister(patient);
     }
 
     public void finishConsult(Properties props) throws SQLException {
@@ -150,11 +207,8 @@ public class Database {
         Boolean isPaid = props.getProperty("Paid").equals("Yes");
 
         ConsultationDAOImpl consultationDAO = new ConsultationDAOImpl();
-        System.out.println(doctorId);
-        System.out.println(patientId);
 
         ResultSet consult = consultationDAO.getUnfinishedConsultByPatientAndDoctor(patientId, doctorId);
-        System.out.println(doctorId);
 
         if (consult.next()) {
             Consultation consultation = new Consultation();

@@ -66,4 +66,19 @@ public class ExertsDAOImpl implements ExertsDAO {
 
         return statement.executeQuery(sql);
     }
+
+    public ResultSet getDoctorsExertThisSpecialty(int specialtyId) throws SQLException {
+        Connection conn = ConnectionManager.getAnInstance().getConnection();
+
+        String sql = "" +
+                "SELECT * FROM Exerts " +
+                "INNER JOIN Doctors " +
+                "ON Doctors.id = Exerts.doctors_id " +
+                "WHERE specialties_id = ? ";
+
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, specialtyId);
+
+        return statement.executeQuery();
+    }
 }

@@ -15,8 +15,10 @@ public class Frames {
     private RegisterPatients registerPatientsFrame;
     private RegisterConsult registerConsultFrame;
     private FinishConsult finishConsultFrame;
+    private FinishRegisterPatient finishRegisterPatientFrame;
     private Menu menuFrame;
     private Database database;
+    private Properties properties;
 
     public void connectDatabase(String url, Properties props, boolean createTables) {
         String successfulMessage = "Connection successfully completed!";
@@ -25,7 +27,7 @@ public class Frames {
             database = new Database();
         } catch (ClassNotFoundException e) {
             new ErrorFrame(e);
-            init();
+            init(true);
             return;
         }
 
@@ -33,7 +35,7 @@ public class Frames {
             database.setConnection(url, props);
         } catch (SQLException e) {
             new ErrorFrame(e);
-            init();
+            init(true);
             return;
         }
 
@@ -42,19 +44,41 @@ public class Frames {
                 database.createDefaultTables();
             } catch (SQLException e) {
                 new ErrorFrame(e);
-                init();
+                init(true);
                 return;
             }
         }
 
         JOptionPane.showMessageDialog(null, successfulMessage);
 
-        connectionFrame.dispose();
+        if (connectionFrame != null) {
+            connectionFrame.dispose();
+        }
+
         initMenuFrame();
     }
 
-    public void init() {
-        connectionFrame = new SetConnection(this);
+    public void showErrorFrame(String errorMessage) {
+        new ErrorFrame(errorMessage);
+    }
+
+    public void init(boolean show) {
+        if (show) {
+            connectionFrame = new SetConnection(this);
+            return;
+        }
+
+        Properties props = new Properties();
+
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String password = "password";
+        String user = "postgres";
+
+        props.setProperty("user", user);
+        props.setProperty("password", password);
+        props.setProperty("url", url);
+
+        connectDatabase(url, props, false);
     }
 
     public void initMenuFrame() {
@@ -73,7 +97,7 @@ public class Frames {
         registerPatientsFrame = new RegisterPatients(this);
     }
 
-    public void initReigsterConsultFrame() {
+    public void initRegisterConsultFrame() {
         menuFrame.dispose();
 
         registerConsultFrame = new RegisterConsult(this);
@@ -83,6 +107,12 @@ public class Frames {
         menuFrame.dispose();
 
         finishConsultFrame = new FinishConsult(this);
+    }
+
+    public void initFinishRegisterPatient(int patientId) {
+        finishConsultFrame.dispose();
+
+        finishRegisterPatientFrame = new FinishRegisterPatient(this, patientId);
     }
 
     public void doRegisterDoctor(
@@ -144,9 +174,43 @@ public class Frames {
         menuFrame.setVisible(true);
     }
 
-    public void doFinishConsult(Properties prop) {
+    public void verifyPatientRegister(Properties prop) {
+        boolean isFinishedRegister;
+
         try {
-            database.finishConsult(prop);
+            isFinishedRegister = database.verifyRegisterOfPatient(prop);
+        } catch (SQLException e) {
+            new ErrorFrame(e);
+            return;
+        }
+
+        if (isFinishedRegister) {
+            doFinishConsult(prop, "finish_consult");
+        } else {
+            int patientId = Integer.parseInt(prop.getProperty("PatientId"));
+            properties = prop;
+            initFinishRegisterPatient(patientId);
+        }
+    }
+
+    public void doFinishRegisterPatient(Properties prop) {
+        try {
+            database.finishRegisterPatient(prop);
+        } catch (SQLException e) {
+            new ErrorFrame(e);
+            return;
+        }
+
+        doFinishConsult(prop, "finish_register");
+    }
+
+    public void doFinishConsult(Properties prop, String where) {
+        try {
+            if (where.equals("finish_consult")) {
+                properties = prop;
+            }
+
+            database.finishConsult(properties);
         } catch (SQLException e) {
             new ErrorFrame(e);
             return;
@@ -154,7 +218,11 @@ public class Frames {
 
         String successfulMessage = "Consult finished successfully!";
 
-        finishConsultFrame.dispose();
+        if (where.equals("finish_consult")) {
+            finishConsultFrame.dispose();
+        } else if (where.equals("finish_register")) {
+            finishRegisterPatientFrame.dispose();
+        }
 
         JOptionPane.showMessageDialog(null, successfulMessage);
 

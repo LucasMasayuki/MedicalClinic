@@ -1,16 +1,13 @@
 package Frames;
 
-import Dao.DoctorsDAOImpl;
+import Dao.ExertsDAOImpl;
 import Dao.PatientsDAOImpl;
 import Dao.SpecialtiesDAOImpl;
-import Entity.Consultation;
-import Frames.Frames;
 import Utility.ComboItem;
 
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class RegisterConsult extends JFrame {
@@ -22,27 +19,26 @@ public class RegisterConsult extends JFrame {
     private JFormattedTextField dateField;
     private JComboBox specialtyBox;
     private JButton backButton;
+    private JLabel doctorsLabel;
     private ComboItem defaultItem = new ComboItem("", "");
 
     private Frames frames;
 
-    private void setDoctorsBox() {
-        DoctorsDAOImpl doctorsDAO = new DoctorsDAOImpl();
-
+    private void setDoctorsBox(ResultSet doctors) {
         doctorBox.addItem(defaultItem);
+        doctorBox.setVisible(true);
+        doctorsLabel.setVisible(true);
 
         try {
-            ResultSet doctors = doctorsDAO.getAll();
-
             while (doctors.next()) {
-                String id = Integer.toString(doctors.getInt("id"));
+                String id = Integer.toString(doctors.getInt("doctors_id"));
                 String name = doctors.getString("name");
                 ComboItem item = new ComboItem(name, id);
 
                 doctorBox.addItem(item);
             }
         } catch (SQLException e) {
-            new ErrorFrame(e);
+            this.frames.showErrorFrame(e.getMessage());
         }
     }
 
@@ -62,7 +58,7 @@ public class RegisterConsult extends JFrame {
                 patientBox.addItem(item);
             }
         } catch (SQLException e) {
-            new ErrorFrame(e);
+            this.frames.showErrorFrame(e.getMessage());
         }
     }
 
@@ -83,7 +79,7 @@ public class RegisterConsult extends JFrame {
                 specialtyBox.addItem(item);
             }
         } catch (SQLException e) {
-            new ErrorFrame(e);
+            this.frames.showErrorFrame(e.getMessage());
         }
     }
 
@@ -96,7 +92,6 @@ public class RegisterConsult extends JFrame {
 
         this.frames = frames;
 
-        setDoctorsBox();
         setPatientBox();
         setSpecialtyBox();
 
@@ -113,6 +108,34 @@ public class RegisterConsult extends JFrame {
             props.setProperty("Hour", hourField.getText());
 
             this.frames.doRegisterConsult(props);
+        });
+
+        specialtyBox.addActionListener(event -> {
+            ComboItem specialty = (ComboItem) specialtyBox.getSelectedItem();
+            doctorBox.removeAllItems();
+            doctorBox.setVisible(false);
+            doctorsLabel.setVisible(false);
+
+            int specialtyId = Integer.parseInt(specialty.getValue());
+
+            ExertsDAOImpl exertsDAO = new ExertsDAOImpl();
+
+            ResultSet doctors = null;
+
+            try {
+                doctors = exertsDAO.getDoctorsExertThisSpecialty(specialtyId);
+
+                if (!doctors.isBeforeFirst()) {
+                    this.frames.showErrorFrame("No doctors in this specialty");
+                    return;
+                }
+
+            } catch (SQLException e) {
+                this.frames.showErrorFrame(e.getMessage());
+                return;
+            }
+
+            setDoctorsBox(doctors);
         });
 
         backButton.addActionListener(event -> {
