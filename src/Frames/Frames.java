@@ -71,7 +71,7 @@ public class Frames {
         Properties props = new Properties();
 
         String url = "jdbc:postgresql://localhost:5432/postgres";
-        String password = "123456789lkk";
+        String password = "password";
         String user = "postgres";
 
         props.setProperty("user", user);
