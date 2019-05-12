@@ -3,14 +3,12 @@ package Frames;
 import Dao.DoctorsDAOImpl;
 import Dao.PatientsDAOImpl;
 import Dao.SpecialtiesDAOImpl;
-import Entity.Consultation;
-import Frames.Frames;
-import Utility.ComboItem;
+
+import main.java.utility.ComboItem;
 
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class RegisterConsult extends JFrame {

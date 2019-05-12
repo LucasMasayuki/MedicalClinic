@@ -4,7 +4,7 @@ import Dao.DiseasesDAOImpl;
 import Dao.DoctorsDAOImpl;
 import Dao.PatientsDAOImpl;
 import Entity.Consultation;
-import Utility.ComboItem;
+import main.java.utility.ComboItem;
 
 import javax.swing.*;
 import java.sql.ResultSet;

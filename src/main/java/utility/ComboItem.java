@@ -1,4 +1,4 @@
-package Utility;
+package main.java.utility;
 
 public class ComboItem {
     private String key;

@@ -1,0 +1,15 @@
+.title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+
+.form-label {
+    -fx-padding: 0px 0px 0px 10px;
+    -fx-font-size: 14px;
+    -fx-max-width: infinity;
+}
+
+.form-select {
+}

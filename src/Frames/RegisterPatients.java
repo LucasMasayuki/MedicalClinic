@@ -1,6 +1,6 @@
 package Frames;
 
-import Utility.ComboItem;
+import main.java.utility.ComboItem;
 
 import javax.swing.*;
 import java.util.ArrayList;
