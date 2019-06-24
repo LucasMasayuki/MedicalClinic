@@ -120,6 +120,7 @@ public class RegisterPatients extends JFrame {
         registerButton.addActionListener(event -> {
             if (!isValidFields()) {
                 this.frames.showErrorFrame(errorMessage);
+                errorMessage = "";
                 return;
             }
 

@@ -35,6 +35,8 @@ public class RegisterDoctors extends JFrame {
     private ArrayList<String> weekDays = new ArrayList<>();
     private ArrayList<JFormattedTextField> daysOfWeekFields = new ArrayList<>();
 
+    private String errorMessage = "";
+
     private void _initializeArrays() {
         weekDays.add("Sun");
         weekDays.add("Mon");
@@ -85,6 +87,37 @@ public class RegisterDoctors extends JFrame {
         return daysOfWeek;
     }
 
+    private boolean isValidFields() {
+        boolean isValid = true;
+        String telephone = telephoneField.getText();
+        String name = nameField.getText();
+        List<String> listSpecialties = listOfSpecialties.getSelectedValuesList();
+
+        if (telephone.isEmpty()) {
+            errorMessage += " Put the telephone \n";
+            isValid = false;
+        }
+
+        try {
+            Long.parseLong(telephone);
+        } catch (NumberFormatException e) {
+            errorMessage += " Put a valid telephone  \n";
+            isValid = false;
+        }
+
+        if (listSpecialties.isEmpty()) {
+            errorMessage += " Put a one specialty \n";
+            isValid = false;
+        }
+
+        if (name.isEmpty()) {
+            errorMessage += " Put the name \n";
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
     public RegisterDoctors(Frames frames) {
         ResultSet resultSet;
         DefaultListModel specialties = new DefaultListModel<String>();
@@ -119,6 +152,12 @@ public class RegisterDoctors extends JFrame {
         }
 
         registerButton.addActionListener(event -> {
+            if (!isValidFields()) {
+                this.frames.showErrorFrame(errorMessage);
+                errorMessage = "";
+                return;
+            }
+
             String name = nameField.getText();
             String telephone = telephoneField.getText();
 
